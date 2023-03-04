@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Todo
+{% endblock %}
+
+{% block main %}
+    <div id="title" class="title">TODO</div>
+    <form action="/add" method="post">
+      <div class="mb-3">
+          <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="task" type="text">
+      </div>
+      <button class="button" type="submit">REGISTER</button>
+  </form>
+
+        <table align="center">
+  {% for task in tasks %}
+          <tr>
+            <td
+              class="card"
+              id="task_{{task.task_id}}"
+              style="{% if task.done == 1 %}background-color:#C0C0C0;{% else %}background-color:#FFFFFF;{% endif %}"
+              task_id="{{task.task_id}}">{{ task.task }}
+              </td>
+              {% if task.done == 0 %}
+                <td>
+                  <a class="button" href="/completion/{{task.task_id}}">DONE</a>
+                </td>
+              {% else %}
+              <td>
+                <a class="button" href="/undo/{{task.task_id}}">UNDONE</a>
+              </td>
+              {% endif %}
+            <td>
+              <a class="button" href="/delete/{{task.task_id}}">DELETE</a>
+            </td>
+          </tr>
+  {% endfor %}
+        </table>
+        <div>
+          タスク数：{{count}}</br>
+          完了タスク数：{{done_num}}
+        </div>
+{% endblock %}
